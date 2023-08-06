@@ -4,14 +4,17 @@ import Profile from "../pages/Profile";
 import ProfileIDPage from "../pages/ProfileIDPage";
 import RegistrationPage from "../pages/RegistrationPage";
 import NotFoundPage from "../pages/NotFoundPage";
+import {redirect} from "react-router-dom";
+import RedirectPage from "../pages/RedirectPage";
+import {ChildComponentProps} from "../types";
 
 interface IPages {
     path: string;
-    component: FunctionComponent;
+    component: FunctionComponent<ChildComponentProps>;
 }
 
 export const publicPages: IPages[] = [
-    {path: '/*', component: RegistrationPage},
+    {path: '/*', component: RedirectPage},
     {path: '/login', component: RegistrationPage}
 ]
 

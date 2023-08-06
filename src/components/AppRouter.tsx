@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Route, Routes} from "react-router-dom";
 import {privatePages, publicPages} from "../routes";
 import {useAppSelector} from "../hooks/useTyped";
+import {ChildComponentProps} from "../types";
 
-const AppRouter = () => {
-    const isAuth = useAppSelector(state => state.authSlice.isAuth)
+const AppRouter = ({onTitleChange}: ChildComponentProps) => {
+    const isAuth = useAppSelector(state => state.auth.isAuth)
 
     return (
         <Routes>
@@ -12,7 +13,7 @@ const AppRouter = () => {
                 ? privatePages.map(route =>
                     <Route
                         path={route.path}
-                        element={<route.component/>}
+                        element={<route.component onTitleChange={onTitleChange}/>}
                         key={route.path}
                     />
                 )
@@ -20,7 +21,7 @@ const AppRouter = () => {
                 publicPages.map(route =>
                     <Route
                         path={route.path}
-                        element={<route.component/>}
+                        element={<route.component onTitleChange={onTitleChange}/>}
                         key={route.path}
                     />
                 )
