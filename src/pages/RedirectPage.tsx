@@ -1,4 +1,4 @@
-import React, {FC, FunctionComponent, useEffect, useState} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 import {Navigate} from "react-router-dom";
 import {ChildComponentProps} from "../types";
 

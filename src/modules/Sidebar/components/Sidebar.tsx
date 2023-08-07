@@ -22,6 +22,7 @@ import {useNavigate} from "react-router-dom";
 import ToggleThemeButton from "./ToggleThemeButton";
 import {Brightness4, Brightness7} from "@mui/icons-material";
 import {useAppSelector} from "../../../hooks/useTyped";
+import Logout from "./Logout";
 
 const drawerWidth = 240;
 
@@ -35,7 +36,7 @@ interface Props {
     title: string;
 }
 
-export default function SideBar(props: Props) {
+function SideBar(props: Props) {
     const {window} = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const {children} = props;
@@ -69,12 +70,7 @@ export default function SideBar(props: Props) {
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <LogoutIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary={'Logout'}/>
-                    </ListItemButton>
+                    <Logout/>
                 </ListItem>
                 <ListItem disablePadding>
                     <ToggleThemeButton/>
@@ -155,3 +151,5 @@ export default function SideBar(props: Props) {
         </Box>
     );
 }
+
+export {SideBar}

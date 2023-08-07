@@ -1,13 +1,9 @@
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import {BrowserRouter} from "react-router-dom";
-
 import './App.css'
 import AppRouter from "./components/AppRouter";
-import SideBar from "./modules/Sidebar/components/Sidebar";
-import {getDesignTokens} from "./theme/theme";
-import {useAppSelector} from "./hooks/useTyped";
-import {createTheme, ThemeProvider} from "@mui/material";
-import {PaletteMode} from '@mui/material/'
+import {SideBar} from "./modules/Sidebar";
+import {ThemeProvider} from "@mui/material";
 import {useTheme} from "./hooks/useTheme";
 
 const App = () => {

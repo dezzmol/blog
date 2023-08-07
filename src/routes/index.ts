@@ -4,9 +4,9 @@ import Profile from "../pages/Profile";
 import ProfileIDPage from "../pages/ProfileIDPage";
 import RegistrationPage from "../pages/RegistrationPage";
 import NotFoundPage from "../pages/NotFoundPage";
-import {redirect} from "react-router-dom";
 import RedirectPage from "../pages/RedirectPage";
 import {ChildComponentProps} from "../types";
+import ProfileSettings from "../pages/ProfileSettings";
 
 interface IPages {
     path: string;
@@ -23,5 +23,6 @@ export const privatePages: IPages[] = [
     {path: '/feed', component: Feed},
     {path: '/profile', component: Profile},
     {path: '/:id', component: ProfileIDPage},
+    {path: '/profile/settings', component: ProfileSettings}
 ]
 

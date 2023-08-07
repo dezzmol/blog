@@ -10,7 +10,7 @@ const Feed: FC<ChildComponentProps> = ({onTitleChange}) => {
 
     return (
         <div>
-
+            Feed page
         </div>
     );
 };
