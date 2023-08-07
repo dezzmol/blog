@@ -1,12 +1,14 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
+import { GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import {auth} from "../../../firebase";
 import '../styles/styles.css'
 import {useAppDispatch} from "../../../hooks/useTyped";
 import {login} from "../../../store/slice/authSlice";
 import {Button, Input, TextField} from "@mui/material";
 import Container from "@mui/material/Container";
-import {redirect} from "react-router-dom";
+import {redirect, useNavigate} from "react-router-dom";
+import {setUser} from "../../../store/slice/userSlice";
+import {IDataForReg} from "../types";
 
 const provider = new GoogleAuthProvider();
 
@@ -15,14 +17,40 @@ const RegistrationForm: FunctionComponent = () => {
     const [password, setPassword] = useState<string>('')
     const [haveAcc, setHaveAcc] = useState<boolean>(false)
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const signUp = async () => {
+        await createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                // ...
+                console.log(user)
+
+                const displayName = 'user'
+                dispatch(login())
+
+                dispatch(setUser({email, displayName}))
+                navigate('/feed')
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+            });
+
+    }
+
     const signIn = async () => {
         await signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
                 // ...
-                dispatch()
+                const displayName = user.displayName
+                dispatch(login())
                 console.log(user)
+                dispatch(setUser({email, displayName}))
+                navigate('/feed')
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -30,11 +58,12 @@ const RegistrationForm: FunctionComponent = () => {
             });
     }
 
+
     const Auth = () => {
         if (haveAcc) {
             signIn()
         } else {
-
+            signUp()
         }
     }
 
@@ -58,7 +87,7 @@ const RegistrationForm: FunctionComponent = () => {
                 margin={'normal'}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <Button style={{marginTop: '5px'}} variant={"contained"} fullWidth={true} onClick={signIn}>{haveAcc ? 'Sign In' : 'SignUp'}</Button>
+            <Button style={{marginTop: '5px'}} variant={"contained"} fullWidth={true} onClick={Auth}>{haveAcc ? 'Sign In' : 'SignUp'}</Button>
             <h4 style={{marginTop: '5px'}}>{haveAcc ? "Have not account?" : 'Already have account?'}</h4>
             <Button style={{marginTop: '5px'}} variant={'text'} color={"primary"} onClick={() => setHaveAcc(!haveAcc)}>{haveAcc ? 'Sign Up' : 'Sign In'}</Button>
         </Container>
