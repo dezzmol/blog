@@ -1,5 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import {ChildComponentProps} from "../types";
+import PostList from "../modules/PostsList/components/PostList";
+import Container from "@mui/material/Container";
 
 const Feed: FC<ChildComponentProps> = ({onTitleChange}) => {
     const [title, setTitle] = useState<string>('Feed');
@@ -9,9 +11,9 @@ const Feed: FC<ChildComponentProps> = ({onTitleChange}) => {
     }, [])
 
     return (
-        <div>
-            Feed page
-        </div>
+        <Container>
+            <PostList/>
+        </Container>
     );
 };
 

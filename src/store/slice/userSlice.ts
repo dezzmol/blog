@@ -3,11 +3,13 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 interface IUser {
     email: string;
     displayName: string | null;
+    userID: string;
 }
 
-const initialState = {
+const initialState: IUser = {
     email: '',
-    displayName: ''
+    displayName: '',
+    userID: '',
 }
 
 const userSlice = createSlice({
@@ -16,6 +18,7 @@ const userSlice = createSlice({
     reducers: {
         setUser: (state, action: PayloadAction<IUser>) => {
             state.email = action.payload.email;
+            state.userID = action.payload.userID
             if (state.displayName !== null) {
                 state.displayName = action.payload.displayName!;
             }
@@ -23,6 +26,7 @@ const userSlice = createSlice({
         deleteUser: (state) => {
             state.email = '';
             state.displayName = '';
+            state.userID = '';
         }
     }
 })

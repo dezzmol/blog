@@ -1,24 +1,23 @@
-import React, {FunctionComponent, useEffect, useState} from 'react';
-import { GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import React, {FunctionComponent, useState} from 'react';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import {auth} from "../../../firebase";
 import '../styles/styles.css'
-import {useAppDispatch} from "../../../hooks/useTyped";
-import {login} from "../../../store/slice/authSlice";
-import {Button, Input, TextField} from "@mui/material";
+import {useAppDispatch, useAppSelector} from "../../../hooks/useTyped";
+import {login, loginError, loginSuccess} from "../../../store/slice/authSlice";
+import {Backdrop, Button, CircularProgress, TextField} from "@mui/material";
 import Container from "@mui/material/Container";
-import {redirect, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {setUser} from "../../../store/slice/userSlice";
-import {IDataForReg} from "../types";
-
-const provider = new GoogleAuthProvider();
 
 const RegistrationForm: FunctionComponent = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [haveAcc, setHaveAcc] = useState<boolean>(false)
+    const {isLoading} = useAppSelector(state => state.auth)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const signUp = async () => {
+        dispatch(login())
         await createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in
@@ -27,34 +26,38 @@ const RegistrationForm: FunctionComponent = () => {
                 console.log(user)
 
                 const displayName = 'user'
-                dispatch(login())
-
-                dispatch(setUser({email, displayName}))
+                dispatch(loginSuccess())
+                const userID = user.uid
+                dispatch(setUser({email, displayName, userID}))
                 navigate('/feed')
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 // ..
+                dispatch(loginError(error))
             });
 
     }
 
     const signIn = async () => {
+        dispatch(login())
         await signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
                 // ...
                 const displayName = user.displayName
-                dispatch(login())
+                dispatch(loginSuccess())
                 console.log(user)
-                dispatch(setUser({email, displayName}))
+                const userID = user.uid
+                dispatch(setUser({email, displayName, userID}))
                 navigate('/feed')
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                dispatch(loginError(error))
             });
     }
 
@@ -90,6 +93,12 @@ const RegistrationForm: FunctionComponent = () => {
             <Button style={{marginTop: '5px'}} variant={"contained"} fullWidth={true} onClick={Auth}>{haveAcc ? 'Sign In' : 'SignUp'}</Button>
             <h4 style={{marginTop: '5px'}}>{haveAcc ? "Have not account?" : 'Already have account?'}</h4>
             <Button style={{marginTop: '5px'}} variant={'text'} color={"primary"} onClick={() => setHaveAcc(!haveAcc)}>{haveAcc ? 'Sign Up' : 'Sign In'}</Button>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={isLoading}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </Container>
     );
 };

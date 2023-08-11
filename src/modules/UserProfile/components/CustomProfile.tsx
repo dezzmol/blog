@@ -10,6 +10,7 @@ const CustomProfile = () => {
     const [displayName, setDisplayName] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const user = auth.currentUser
+    const userID = user!.uid
     const dispatch = useAppDispatch()
     const updateNameAndAvatar = async () => {
         await updateProfile(user!, {
@@ -17,7 +18,7 @@ const CustomProfile = () => {
         }).then(() => {
             // Profile updated!
             // ...
-            dispatch(setUser({email, displayName}))
+            dispatch(setUser({email, displayName, userID}))
         }).catch((error) => {
             // An error occurred
             // ...

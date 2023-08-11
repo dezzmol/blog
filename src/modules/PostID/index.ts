@@ -1,0 +1,1 @@
+export {PostIdForm} from './components/PostIDForm'
