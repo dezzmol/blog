@@ -44,6 +44,10 @@ const postsSlice = createSlice({
         },
         addPost: (state, action:PayloadAction<IPost>) => {
             state.posts.push(action.payload)
+        },
+        searchPost: (state, action:PayloadAction<string>) => {
+            const searchItem = action.payload.toLowerCase();
+            state.posts = state.posts.filter(post => post.title.toLowerCase().includes(searchItem))
         }
     }
 })

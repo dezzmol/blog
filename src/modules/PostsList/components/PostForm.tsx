@@ -8,7 +8,7 @@ const PostForm: FC<IPost> = (posts) => {
     const navigate = useNavigate()
 
     return (
-        <Card>
+        <Card style={{marginBottom: '20px'}}>
             <CardContent>
                 <Typography variant={"h5"} component={"div"}>
                     {posts.title}

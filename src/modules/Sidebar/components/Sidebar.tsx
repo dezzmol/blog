@@ -23,6 +23,7 @@ import ToggleThemeButton from "./ToggleThemeButton";
 import {Brightness4, Brightness7} from "@mui/icons-material";
 import {useAppSelector} from "../../../hooks/useTyped";
 import Logout from "./Logout";
+import CreatePost from "./createPost";
 
 const drawerWidth = 240;
 
@@ -60,6 +61,9 @@ function SideBar(props: Props) {
                         </ListItemIcon>
                         <ListItemText primary={'Feed'}/>
                     </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <CreatePost/>
                 </ListItem>
                 <ListItem disablePadding>
                     <ListItemButton onClick={() => navigate('/profile')}>

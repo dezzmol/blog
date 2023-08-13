@@ -7,6 +7,7 @@ import RedirectPage from "../pages/RedirectPage";
 import {ChildComponentProps} from "../types";
 import ProfileSettings from "../pages/ProfileSettings";
 import PostIDPage from "../pages/PostIDPage";
+import createPostPage from "../pages/createPostPage";
 
 interface IPages {
     path: string;
@@ -23,6 +24,7 @@ export const privatePages: IPages[] = [
     {path: '/feed', component: Feed},
     {path: '/profile', component: Profile},
     {path: '/profile/settings', component: ProfileSettings},
-    {path: '/posts/:id', component: PostIDPage}
+    {path: '/posts/:id', component: PostIDPage},
+    {path: '/create', component: createPostPage}
 ]
 
