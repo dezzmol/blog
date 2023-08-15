@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Button, Card, CardActions, CardContent} from "@mui/material";
-import {IPost} from "../../../store/slice/postsSlice";
+import {IPost} from "../store/slice/postsSlice";
 import Typography from "@mui/material/Typography";
 import {useNavigate} from "react-router-dom";
 
