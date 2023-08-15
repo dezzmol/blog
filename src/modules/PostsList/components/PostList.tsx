@@ -1,29 +1,29 @@
 import React, {FC, useEffect, useState} from 'react';
-import {collection, getDocs} from "firebase/firestore";
+import {collection, getDocs, orderBy, query} from "firebase/firestore";
 import {db} from "../../../firebase";
 import {useAppDispatch, useAppSelector} from "../../../hooks/useTyped";
-import {IPost, fetchPostsSuccess, fetchPosts, fetchPostsError} from "../../../store/slice/postsSlice";
+import {IPost, fetchPostsSuccess, fetchPosts, fetchPostsError, searchPost} from "../store/slice/postsSlice";
 import {Backdrop, Button, CircularProgress, Grid, Theme, useMediaQuery} from "@mui/material";
 import PostForm from "./PostForm";
 import PostFilter from "./PostFilter";
 
 const PostList: FC = () => {
     const dispatch = useAppDispatch()
-    const posts = useAppSelector(state => state.posts.posts)
     const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
     const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(!isSmallScreen);
-    const {isLoading} = useAppSelector(state => state.posts)
-
+    const {isLoading, posts, filteredPosts} = useAppSelector(state => state.posts)
+    const [searchTerm, setSearchTerm] = useState<string>('')
 
     useEffect(() => {
         const getData = async () => {
             try {
                 dispatch(fetchPosts())
                 const data: IPost[] = [];
-                const querySnapshot = await getDocs(collection(db, "posts"));
-                querySnapshot.forEach((doc) => {
+                const querySnapshot = collection(db, "posts");
+                const dcs = await query(querySnapshot, orderBy('date', 'desc'))
+                const docs = await getDocs(dcs)
+                docs.forEach((doc) => {
                     // doc.data() is never undefined for query doc snapshots
-                    console.log(doc.id, " => ", doc.data());
                     data.push(doc.data() as IPost)
 
                 });
@@ -38,6 +38,11 @@ const PostList: FC = () => {
         getData();
     }, [])
 
+    const handleSearchChange = (value: string) => {
+        setSearchTerm(value);
+        dispatch(searchPost(value));
+    };
+
     const toggleFilters = () => {
         setIsFiltersOpen((prev: boolean) => !prev);
     };
@@ -48,19 +53,19 @@ const PostList: FC = () => {
             {isSmallScreen ? (
                 <Grid item xs={12} md={3}>
                     <Button onClick={toggleFilters} fullWidth>
-                        Toggle Filters
+                        Toggle Search&Filters
                     </Button>
-                    <PostFilter isOpen={isFiltersOpen}/>
+                    <PostFilter isOpen={isFiltersOpen} onChange={handleSearchChange}/>
                 </Grid>
             ) : (
                 <Grid item md={3}>
-                    <PostFilter isOpen={true}/>
+                    <PostFilter isOpen={true} onChange={handleSearchChange}/>
                 </Grid>
             )}
 
 
             <Grid item xs={12} md={9}>
-                {posts.map(post =>
+                {filteredPosts.map(post =>
                     <PostForm id={post.id} userID={post.userID} title={post.title} body={post.body}
                               userDisplayName={post.userDisplayName}/>
                 )}
@@ -75,4 +80,4 @@ const PostList: FC = () => {
     );
 };
 
-export default PostList;
+export {PostList};
