@@ -1,7 +1,7 @@
 import {Grid, Paper, TextField} from '@mui/material';
 import React, {FC, useState} from 'react';
 import Button from "@mui/material/Button";
-import {addDoc, collection, updateDoc} from "firebase/firestore";
+import {doc, serverTimestamp, setDoc} from "firebase/firestore";
 import {db} from "../../../firebase";
 import {useAppSelector} from "../../../hooks/useTyped";
 import {useNavigate} from "react-router-dom";
@@ -14,16 +14,17 @@ const CreatePostForm: FC = () => {
 
     const createPost = async () => {
         try {
-            const doc = await addDoc(collection(db, 'posts'), {
+            const id = Date.now()
+            const document = await setDoc(doc(db, 'posts', id.toString()), {
                 title: title,
                 body: body,
                 userDisplayName: displayName,
                 userID: userID,
+                id: id,
+                date: serverTimestamp()
             })
 
-            await updateDoc(doc, {
-                id: doc.id
-            })
+
 
             navigate('/feed')
         } catch (e) {
