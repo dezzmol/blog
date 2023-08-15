@@ -4,13 +4,14 @@ import {auth} from "../../../firebase";
 import {Button, Grid, TextField} from "@mui/material";
 import { updateProfile } from 'firebase/auth';
 import {useAppDispatch} from "../../../hooks/useTyped";
-import {setUser} from "../../../store/slice/userSlice";
+import {setUser} from "../store/slice/userSlice";
+import {useNavigate} from "react-router-dom";
 
 const CustomProfile = () => {
     const [displayName, setDisplayName] = useState<string>('')
-    const [email, setEmail] = useState<string>('')
+    const [Email, setEmail] = useState<string>('')
+    const navigate = useNavigate()
     const user = auth.currentUser
-    const userID = user!.uid
     const dispatch = useAppDispatch()
     const updateNameAndAvatar = async () => {
         await updateProfile(user!, {
@@ -18,7 +19,13 @@ const CustomProfile = () => {
         }).then(() => {
             // Profile updated!
             // ...
+
+            const user = auth.currentUser
+            const email = user!.email
+            const displayName = user!.displayName
+            const userID = user!.uid
             dispatch(setUser({email, displayName, userID}))
+            navigate('/profile')
         }).catch((error) => {
             // An error occurred
             // ...
