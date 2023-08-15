@@ -10,12 +10,14 @@ export interface IPost {
 
 export interface IPosts {
     posts: IPost[];
+    filteredPosts: IPost[];
     isLoading: boolean;
     error: string;
 }
 
 const initialState: IPosts = {
     posts: [],
+    filteredPosts: [],
     isLoading: false,
     error: '',
 }
@@ -32,6 +34,7 @@ const postsSlice = createSlice({
         fetchPostsSuccess: (state, action: PayloadAction<IPost[]>) => {
             state.isLoading = false;
             state.posts = [...action.payload];
+            state.filteredPosts = [...action.payload];
             state.error = '';
         },
         fetchPostsError: (state, action: PayloadAction<string>) => {
@@ -45,12 +48,23 @@ const postsSlice = createSlice({
         addPost: (state, action:PayloadAction<IPost>) => {
             state.posts.push(action.payload)
         },
-        searchPost: (state, action:PayloadAction<string>) => {
-            const searchItem = action.payload.toLowerCase();
-            state.posts = state.posts.filter(post => post.title.toLowerCase().includes(searchItem))
-        }
+        searchPost: (state, action:PayloadAction<string | null>) => {
+            if (action.payload) {
+                const searchItem = action.payload.toLowerCase();
+                state.filteredPosts = state.posts.filter(post => post.title.toLowerCase().includes(searchItem))
+            } else {
+                state.filteredPosts = state.posts
+            }
+
+        },
+        // filterPost: (state, action: PayloadAction<string | null>) => {
+        //     const statusFilter = action.payload
+        //     if (statusFilter) {
+        //         state.posts = state.posts.filter(post => post.)
+        //     }
+        // }
     }
 })
 
-export const {fetchPosts, fetchPostsSuccess, fetchPostsError, deletePosts, addPost} = postsSlice.actions
-export default postsSlice.reducer
+export const {fetchPosts, fetchPostsSuccess, fetchPostsError, deletePosts, addPost, searchPost} = postsSlice.actions
+export const postsReducer = postsSlice.reducer
