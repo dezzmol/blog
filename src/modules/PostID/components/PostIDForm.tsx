@@ -1,13 +1,12 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Backdrop, Button, CircularProgress, Grid, Paper, Theme, useMediaQuery} from "@mui/material";
 import {useParams} from "react-router-dom";
-import {collection, doc, getDoc, getDocs} from "firebase/firestore";
+import {collection, doc, getDoc, getDocs, orderBy, query} from "firebase/firestore";
 import {db} from "../../../firebase";
-import {IPost} from "../../../store/slice/postsSlice";
+import {IPost} from "../../PostsList/store/slice/postsSlice";
 import {IComments} from "../../../types";
 import About from "./About";
 import Comments from "./Comments";
-import CommentForm from "./CommentForm";
 
 const PostIdForm: FC = () => {
     const params = useParams()
@@ -28,12 +27,14 @@ const PostIdForm: FC = () => {
 
     const getCommentsById = async () => {
         setComments([])
-        const docs = await getDocs(commentsRef)
+        const dcs = await query(commentsRef, orderBy('date', 'desc'))
+        const docs = await getDocs(dcs)
         const tmparr: IComments[] = []
         docs.forEach((doc) => {
             tmparr.push(doc.data() as IComments)
         })
         setComments(tmparr)
+        console.log(tmparr)
     }
 
     const toggleAbout = () => {
