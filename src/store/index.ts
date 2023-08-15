@@ -1,15 +1,15 @@
 import {configureStore} from "@reduxjs/toolkit";
-import authSlice from "./slice/authSlice";
+import {authReducer} from "../modules/RegistrationForm";
 import themeSlice from "./slice/themeSlice";
-import userSlice from "./slice/userSlice";
-import postsSlice from "./slice/postsSlice";
+import {userReducer} from "../modules/UserProfile";
+import {postsReducer} from "../modules/PostsList/"
 
 export const store = configureStore({
     reducer: {
-        auth: authSlice,
+        auth: authReducer,
         theme: themeSlice,
-        user: userSlice,
-        posts: postsSlice,
+        user: userReducer,
+        posts: postsReducer,
     }
 })
 
