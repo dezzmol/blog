@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {Button, Grid, TextField} from "@mui/material";
-import {addDoc, collection, doc} from "firebase/firestore";
-import {db} from "../../../firebase";
+import {addDoc, collection, doc, serverTimestamp} from "firebase/firestore";
+import Firebase, {db} from "../../../firebase";
 import {useParams} from "react-router-dom";
 import {useAppSelector} from "../../../hooks/useTyped";
 
@@ -14,11 +14,12 @@ const CommentForm: FC = () => {
         if (comment.length <= 3) {
             return;
         }
-
+        console.log(comment, displayName, userID)
         await addDoc(commentsRef, {
             body: comment,
             userDisplayName: displayName,
-            userID: userID
+            userID: userID,
+            date: serverTimestamp()
         })
 
         setComment('')
