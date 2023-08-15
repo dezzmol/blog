@@ -29,6 +29,7 @@ Configuration
 
 Create a Firebase project at firebase.google.com and obtain your Firebase configuration credentials.
 Replace the placeholder values in the src/firebase.ts file with your Firebase configuration.
+Don't forget to enable authentication with Email/password and Firestore Database
 
 Usage
 Run the development server:
