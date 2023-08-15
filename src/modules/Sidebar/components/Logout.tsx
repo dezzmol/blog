@@ -6,8 +6,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { signOut } from 'firebase/auth';
 import {auth} from "../../../firebase";
 import {useAppDispatch} from "../../../hooks/useTyped";
-import {logout} from "../../../store/slice/authSlice";
-import {deleteUser} from "../../../store/slice/userSlice";
+import {logout} from "../../RegistrationForm";
+import {deleteUser} from "../../UserProfile/store/slice/userSlice";
 
 const Logout: FunctionComponent = () => {
     const dispatch = useAppDispatch()

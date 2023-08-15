@@ -1,13 +1,12 @@
 import React, {FunctionComponent, useState} from 'react';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import {auth} from "../../../firebase";
-import '../styles/styles.css'
 import {useAppDispatch, useAppSelector} from "../../../hooks/useTyped";
-import {login, loginError, loginSuccess} from "../../../store/slice/authSlice";
+import {login, loginError, loginSuccess} from "../store/slice/authSlice";
 import {Backdrop, Button, CircularProgress, TextField} from "@mui/material";
 import Container from "@mui/material/Container";
 import {useNavigate} from "react-router-dom";
-import {setUser} from "../../../store/slice/userSlice";
+import {setUser} from "../../UserProfile/store/slice/userSlice";
 
 const RegistrationForm: FunctionComponent = () => {
     const [email, setEmail] = useState<string>('')
