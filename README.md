@@ -1,6 +1,6 @@
 # React Redux Blog App with Firebase
 
-Welcome to the React Redux Blog App with Firebase! This web application serves as a fully functional blog site. The app includes user authentication and utilizes Firestore for efficient data storage and retrieval
+Welcome to the React Redux Blog App with Firebase! This web application serves as a fully functional blog site. The app includes user authentication and utilizes Firestore for efficient data storage and retrieval. This app was created using modules architecture.
 
 ## Technologies Stack
 
