@@ -1,46 +1,68 @@
-# Getting Started with Create React App
+# React Redux Blog App with Firebase
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the React Redux Blog App with Firebase! This web application serves as a fully functional blog site. The app includes user authentication and utilizes Firestore for efficient data storage and retrieval. This app was created using modules architecture.
 
-## Available Scripts
+## Technologies Stack
 
-In the project directory, you can run:
+React, Redux-Toolkit, React-router-dom, TypeScript, Material UI
 
-### `npm start`
+## Prerequisites
+Make sure you have the following software installed:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Node.js: 
+You can download it from nodejs.org.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Installation
+Clone the repository:
 
-### `npm test`
+`git clone https://github.com/your-username/react-redux-blog-app.git`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Navigate to the project directory:
 
-### `npm run build`
+`cd react-redux-blog-app`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Install dependencies:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+`npm install`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Configuration
 
-### `npm run eject`
+Create a Firebase project at firebase.google.com and obtain your Firebase configuration credentials.
+Replace the placeholder values in the src/firebase.ts file with your Firebase configuration.
+Don't forget to enable authentication with Email/password and Firestore Database
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Usage
+Run the development server:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`npm start`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Open your web browser and navigate to [http://localhost:3000](http://localhost:3000) to access the application.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Screenshots
+### Login/Registration page
 
-## Learn More
+![Alt text](https://i.ibb.co/rt4Jk2D/image-2023-08-16-20-45-17.png "Login page")
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Feed page
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![Alt text](https://i.ibb.co/kxvS1pb/image-2023-08-16-20-48-20.png "Feed page")
+
+### Create post
+
+![Create post](https://i.ibb.co/KrrJGLx/image-2023-08-16-20-48-52.png "Create post")
+
+### Profile
+
+![Profile](https://i.ibb.co/0t4ND7N/image-2023-08-16-20-48-40.png "Profile")
+
+### Dark theme
+
+![Dark theme](https://i.ibb.co/djt89kQ/image-2023-08-16-20-49-06.png "Dark theme")
+
+### Post's page
+
+![Post's page](https://i.ibb.co/r5CZ3db/image-2023-08-16-20-49-19.png "Post's page")
+
+### Mobile version
+
+![Mobile version](https://i.ibb.co/GdFBZ2z/image-2023-08-16-20-49-39.png "Mobile version")
