@@ -15,11 +15,7 @@ You can download it from nodejs.org.
 ## Installation
 Clone the repository:
 
-`git clone https://github.com/your-username/react-redux-blog-app.git`
-
-Navigate to the project directory:
-
-`cd react-redux-blog-app`
+`git clone https://github.com/dezzmol/blog.git`
 
 Install dependencies:
 
