@@ -1,20 +1,24 @@
-import React, {FunctionComponent, useState} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import {auth} from "../../../firebase";
 import {useAppDispatch, useAppSelector} from "../../../hooks/useTyped";
 import {login, loginError, loginSuccess} from "../store/slice/authSlice";
-import {Backdrop, Button, CircularProgress, TextField} from "@mui/material";
+import {Alert, Backdrop, Button, CircularProgress, Collapse, IconButton, TextField} from "@mui/material";
 import Container from "@mui/material/Container";
 import {useNavigate} from "react-router-dom";
 import {setUser} from "../../UserProfile/store/slice/userSlice";
+import CloseIcon from '@mui/icons-material/Close';
 
 const RegistrationForm: FunctionComponent = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [haveAcc, setHaveAcc] = useState<boolean>(false)
-    const {isLoading} = useAppSelector(state => state.auth)
+    const {isLoading, error} = useAppSelector(state => state.auth)
+    const [alertOpen, setAlertOpen] = React.useState(false);
+
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+
     const signUp = async () => {
         dispatch(login())
         await createUserWithEmailAndPassword(auth, email, password)
@@ -28,13 +32,13 @@ const RegistrationForm: FunctionComponent = () => {
                 dispatch(loginSuccess())
                 const userID = user.uid
                 dispatch(setUser({email, displayName, userID}))
-                navigate('/feed')
+                navigate('/profile')
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                // ..
-                dispatch(loginError(error))
+                setAlertOpen(true)
+                dispatch(loginError(errorMessage))
             });
 
     }
@@ -56,7 +60,8 @@ const RegistrationForm: FunctionComponent = () => {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                dispatch(loginError(error))
+                setAlertOpen(true)
+                dispatch(loginError(errorMessage))
             });
     }
 
@@ -89,6 +94,26 @@ const RegistrationForm: FunctionComponent = () => {
                 margin={'normal'}
                 onChange={(e) => setPassword(e.target.value)}
             />
+            <Collapse in={alertOpen}>
+            <Alert
+                severity='error'
+                action={
+                    <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            setAlertOpen(false);
+                        }}
+                    >
+                        <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                    }
+                    sx={{ mb: 2 }}
+                >
+                {error}
+            </Alert>
+            </Collapse>
             <Button style={{marginTop: '5px'}} variant={"contained"} fullWidth={true} onClick={Auth}>{haveAcc ? 'Sign In' : 'SignUp'}</Button>
             <h4 style={{marginTop: '5px'}}>{haveAcc ? "Have not account?" : 'Already have account?'}</h4>
             <Button style={{marginTop: '5px'}} variant={'text'} color={"primary"} onClick={() => setHaveAcc(!haveAcc)}>{haveAcc ? 'Sign Up' : 'Sign In'}</Button>
