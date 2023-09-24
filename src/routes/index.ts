@@ -16,7 +16,8 @@ interface IPages {
 
 export const publicPages: IPages[] = [
     {path: '/*', component: RedirectPage},
-    {path: '/login', component: RegistrationPage}
+    {path: '/login', component: RegistrationPage},
+    {path: '/feed', component: Feed},
 ]
 
 export const privatePages: IPages[] = [
