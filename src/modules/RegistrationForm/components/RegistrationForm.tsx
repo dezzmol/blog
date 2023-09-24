@@ -32,7 +32,7 @@ const RegistrationForm: FunctionComponent = () => {
                 dispatch(loginSuccess())
                 const userID = user.uid
                 dispatch(setUser({email, displayName, userID}))
-                navigate('/feed')
+                navigate('/profile')
             })
             .catch((error) => {
                 const errorCode = error.code;
