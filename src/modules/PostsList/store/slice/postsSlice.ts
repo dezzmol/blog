@@ -45,8 +45,9 @@ const postsSlice = createSlice({
         deletePosts: (state) => {
             state.posts = [];
         },
-        addPost: (state, action:PayloadAction<IPost>) => {
-            state.posts.push(action.payload)
+        addPost: (state, action:PayloadAction<IPost[]>) => {
+            state.posts = [...state.posts, ...action.payload]
+            state.filteredPosts = [...state.posts];
         },
         searchPost: (state, action:PayloadAction<string | null>) => {
             if (action.payload) {
